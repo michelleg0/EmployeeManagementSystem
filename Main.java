@@ -4,13 +4,10 @@ import java.util.Scanner;
 public class Main {
 
 
-    //Create array list to house employee data. This array is at the top since it's being used multiple times.
-    //If its inside a function, then it is usuable for other functions
     static ArrayList<String> employees = new ArrayList<>();
+
     public static void main(String[] args) {
         int optionNumberSelected;
-
-
 
 
         //Menu
@@ -20,7 +17,7 @@ public class Main {
             Scanner scanner = new Scanner(System.in);
             optionNumberSelected = scanner.nextInt();
 
-            switch (optionNumberSelected){
+            switch (optionNumberSelected) {
                 case 1:
                     employeeInformation();
                     break;
@@ -31,32 +28,33 @@ public class Main {
                     deleteEmployee();
                     break;
                 case 4:
-                   upDateEmployee();
+                    upDateEmployee();
                     break;
-                default: break;
+                default:
+                    break;
             }
 
         } while (optionNumberSelected != 5);
     }
 
 
-
-
     public static void showMainMenu() {
         System.out.println("===========================================");
         System.out.println("Select option number from the menu below.");
         System.out.println("1. Fill out employee information");
-        System.out.println("2. See list of employees");
+        System.out.println("2. View list of employees");
         System.out.println("3. Delete employee");
         System.out.println("4. Update employee");
         System.out.println("3. Exit menu");
         System.out.println("===========================================");
     }
+
     public static void employeeInformation() {
         String firstName;
         String lastName;
         String birthDate;
-        int employeeSSN;
+        String employeeSSN;
+
         String employeeDeparment;
         float employeeSalary;
         boolean isEmployeeActive = false;
@@ -77,7 +75,7 @@ public class Main {
             birthDate = scanner.next();
 
             System.out.println("Enter Employee SSN:");
-            employeeSSN = Integer.parseInt(scanner.next());
+            employeeSSN = scanner.next();
 
             System.out.println("Enter employee salary:");
             employeeSalary = Float.parseFloat(scanner.next());
@@ -85,18 +83,16 @@ public class Main {
             System.out.println("Enter employee's department:");
             employeeDeparment = scanner.next();
 
-            System.out.println("Is the employee still active? (active/inactive)");
+            System.out.println("Is the employee still active? (yes/no)");
             isEmployeeActiveStr = scanner.next();
-            isEmployeeActive = isEmployeeActiveStr.equals("active");
+            isEmployeeActive = isEmployeeActiveStr.equals("yes");
 
 
-            System.out.println("Do you wish to continue sorting another employee? (yes/no)");
+            System.out.println("Do you wish to continue viewing other employees? (yes/no)");
             isContinueStr = scanner.next();
             isContinue = isContinueStr.equals("yes");
 
-            employees.add(firstName + " " + lastName + " - " + birthDate + "  "  + employeeSSN + "  " + employeeDeparment + "  " + employeeSalary + "  " + isEmployeeActive);
-
-
+            employees.add(firstName + " " + lastName + " - " + birthDate + "  " + employeeSSN + "  " + employeeDeparment + "  " + employeeSalary + "  " + isEmployeeActive);
 
 
         } while (isContinue);
@@ -104,7 +100,6 @@ public class Main {
 
 
 
-    //Display list of employees
     public static void listEmployees() {
         System.out.println("View employee list:");
         for (String employee : employees) {
@@ -113,12 +108,52 @@ public class Main {
     }
 
 
-//complete the delete first
-   public static void deleteEmployee (){
 
+    //complete the delete first
+    public static void deleteEmployee() {
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Which employee would you like to delete? Please enter the employee SSN: ");
+
+        String deleteSSN = scanner.next();
+
+        for (String employee : employees) {
+            if (employee.contains(deleteSSN)) {
+                //remove from array list - singular
+                employees.remove(employee);
+                System.out.println("We have founds records of. " + deleteSSN + " Their records have sucessfully been removed.");
+                return;
+            }
+        }
     }
 
-    public static void upDateEmployee (){
 
+    public static void upDateEmployee() {
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter employee SSN: ");
+        String employeeSSN = scanner.next();
+
+        System.out.println("Enter employee first name: ");
+        String firstName = scanner.next();
+
+        System.out.println("Enter employee last name: ");
+        String lastName = scanner.next();
+
+
+
+
+        for (String employee : employees) {
+            if (employee.contains(employeeSSN)) {
+
+                employees.remove(employee);
+                employees.add(firstName + " " + lastName +  "  " + employeeSSN );
+                System.out.println("We have added a new employee record. " + employeeSSN);
+                return;
+
+
+            }
+        }
     }
 }
+
